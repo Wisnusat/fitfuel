@@ -1,101 +1,209 @@
-import Image from "next/image";
+'use client'
+
+import React, { useState } from 'react'
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Menu } from 'lucide-react'
+import { MobileNav } from '@/components/ui/mobileNav'
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [isNavOpen, setIsNavOpen] = useState(false)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className="min-h-screen flex flex-col">
+      {/* Navigation */}
+      <nav className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center gap-2">
+          <Image src="/images/logo.svg" width={40} height={40} alt="logo" />
+          <span className="font-semibold">FitFuel</span>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+        <div className="hidden md:flex gap-6">
+          <a href="#" className="text-sm hover:text-green-500">Home</a>
+          <a href="#" className="text-sm hover:text-green-500">Food Calculator</a>
+          <a href="#" className="text-sm hover:text-green-500">My Diet</a>
+        </div>
+        <button className="md:hidden" onClick={() => setIsNavOpen(true)}>
+          <Menu size={24} />
+        </button>
+      </nav>
+
+      <MobileNav isOpen={isNavOpen} setIsOpen={setIsNavOpen} />
+
+      {/* Hero Section */}
+      <section className="bg-green-400 text-center py-16">
+        <h1 className="text-3xl font-bold text-white mb-4">Welcome to FitFuel</h1>
+        <p className="text-white mb-8">Track and manage your daily calorie intake effortlessly</p>
+        <Button variant="default" className="bg-black hover:bg-black/90">Get Started</Button>
+      </section>
+
+      {/* Popular Food Items */}
+      <section className="py-16 bg-gray-100">
+        <div className="container mx-auto md:px-12 px-4">
+          <h2 className="text-2xl font-bold text-center mb-12">Popular Food Items</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card>
+              <CardContent className="p-4">
+                <Image
+                  src="/images/salmon_salad.svg"
+                  alt="Salmon Salad"
+                  width={300}
+                  height={200}
+                  className="rounded-lg mb-4"
+                />
+                <h3 className="font-semibold">Salmon Salad</h3>
+                <p className="text-sm text-gray-600">Calories: 300</p>
+                <Badge className="mt-2 rounded-xl">High Protein</Badge>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4">
+                <Image
+                  src="/images/avocado_toast.svg"
+                  alt="Avocado Toast"
+                  width={300}
+                  height={200}
+                  className="rounded-lg mb-4"
+                />
+                <h3 className="font-semibold">Avocado Toast</h3>
+                <p className="text-sm text-gray-600">Calories: 250</p>
+                <Badge className="mt-2 rounded-xl">Healty Fat</Badge>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4">
+                <Image
+                  src="/images/greek_yogurt.svg"
+                  alt="Greek Yogurt Parfait"
+                  width={300}
+                  height={200}
+                  className="rounded-lg mb-4"
+                />
+                <h3 className="font-semibold">Greek Yogurt Parfait</h3>
+                <p className="text-sm text-gray-600">Calories: 200</p>
+                <Badge className="mt-2 rounded-xl">Calcium Rich</Badge>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Daily Calorie Tracker */}
+      <section className="py-16">
+        <div className="container mx-auto md:px-12 px-4">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="bg-green-100 p-3 rounded-full">
+              <Image src="/images/logo.svg" width={100} height={100} alt="logo" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold">Daily Calorie Tracker</h2>
+              <p className="text-gray-600">Log your meals and monitor your calorie goals</p>
+            </div>
+          </div>
+          
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+            {['Breakfast', 'Lunch', 'Dinner'].map((meal) => (
+              <div key={meal} className="flex items-center gap-4 p-4 border rounded-lg">
+                <Image
+                  src={`/images/${meal}.svg`}
+                  alt={meal}
+                  width={80}
+                  height={80}
+                  className="rounded-lg"
+                />
+                <div>
+                  <h3 className="font-semibold">{meal}</h3>
+                  <h3 className="font-normal">{meal === 'Breakfast' ? 'Oatmeal with fruits and a cup of coffee' : meal === 'Lunch' ? 'Grilled chicken with quinoa and veggies' : 'Salmon with sweet potato and kale salad'}</h3>
+                  <Badge>Calories: {meal === 'Breakfast' ? '300' : meal === 'Lunch' ? '450' : '400'}</Badge>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-16 bg-gray-100">
+        <div className="container mx-auto md:px-12 px-4">
+          <h2 className="text-2xl font-bold text-center mb-4">User Testimonials</h2>
+          <p className="text-center text-gray-600 mb-12">See what our users have to say</p>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                name: 'Jonathan',
+                text: 'FitFuel helped me stay on track with my weight loss journey'
+              },
+              {
+                name: 'Ali',
+                text: 'Easy to use and informative for planning my meals'
+              },
+              {
+                name: 'Anil',
+                text: 'I love the variety of food options provided'
+              }
+            ].map((testimonial, index) => (
+              <Card key={index}>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="h-8 w-8 bg-gray-200 rounded-full" />
+                    <span className="font-semibold">{testimonial.name}</span>
+                  </div>
+                  <p className="text-gray-600">{testimonial.text}</p>
+                  <div className="flex gap-1 mt-4">
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className="text-yellow-400">★</span>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Sign Up Form */}
+      <section className="py-16">
+        <div className="container mx-auto px-4 max-w-md">
+          <h2 className="text-2xl font-bold text-center mb-4">Join FitFuel Today</h2>
+          <p className="text-center text-gray-600 mb-8">Sign up to start tracking your calories</p>
+          
+          <form className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium mb-2">Email</label>
+              <Input type="email" placeholder="Enter your email" />
+              <p className="text-xs text-gray-500 mt-1">We'll never share your email with anyone</p>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-2">Password</label>
+              <Input type="password" placeholder="Enter your password" />
+              <p className="text-xs text-gray-500 mt-1">Minimum 8 characters</p>
+            </div>
+
+            <Button variant="outline" className="w-full">Log In</Button>
+            <Button className="w-full bg-black hover:bg-black/90">Sign Up</Button>
+          </form>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-black text-white py-6">
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <p className="text-sm">© 2024 FitFuel. Seluruh hak cipta dilindungi undang-undang.</p>
+          <div className="flex items-center gap-2">
+            <span className="text-sm md:flex hidden">Indonesia</span>
+            <Image
+              src="/images/indonesia.svg"
+              alt="Indonesia flag"
+              width={50}
+              height={50}
+            />
+          </div>
+        </div>
       </footer>
     </div>
-  );
+  )
 }
