@@ -54,7 +54,10 @@ module.exports = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+		backgroundImage: {
+			'login': "url('/images/login_bg.svg')"
+		}
   	}
   },
   plugins: [require("tailwindcss-animate")],
