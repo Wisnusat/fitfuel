@@ -1,36 +1,18 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Menu } from 'lucide-react'
-import { MobileNav } from '@/components/ui/mobileNav'
+import Navbar from '@/components/ui/navbar'
 
 export default function Home() {
-  const [isNavOpen, setIsNavOpen] = useState(false)
-
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation */}
-      <nav className="flex items-center justify-between p-4 border-b">
-        <div className="flex items-center gap-2">
-          <Image src="/images/logo.svg" width={40} height={40} alt="logo" />
-          <span className="font-semibold">FitFuel</span>
-        </div>
-        <div className="hidden md:flex gap-6">
-          <a href="#" className="text-sm hover:text-green-500">Home</a>
-          <a href="#" className="text-sm hover:text-green-500">Food Calculator</a>
-          <a href="#" className="text-sm hover:text-green-500">My Diet</a>
-        </div>
-        <button className="md:hidden" onClick={() => setIsNavOpen(true)}>
-          <Menu size={24} />
-        </button>
-      </nav>
-
-      <MobileNav isOpen={isNavOpen} setIsOpen={setIsNavOpen} />
+      <Navbar />
 
       {/* Hero Section */}
       <section className="bg-green-400 text-center py-16">

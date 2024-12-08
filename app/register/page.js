@@ -1,34 +1,57 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import Image from "next/image"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Menu } from 'lucide-react'
-import { MobileNav } from '@/components/ui/mobileNav'
+import Navbar from '@/components/ui/navbar'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+
+// Define the form schema
+const formSchema = z.object({
+  username: z.string().min(3, {
+    message: "Username must be at least 3 characters.",
+  }),
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+})
 
 export default function Register() {
-  const [isNavOpen, setIsNavOpen] = useState(false)
+  // Initialize the form
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+      confirmPassword: "",
+    },
+  })
+
+  // Handle form submission
+  function onSubmit(values) {
+    console.log(values)
+    // Here you would typically send the data to your backend
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation */}
-      <nav className="flex items-center justify-between p-4 border-b">
-        <div className="flex items-center gap-2">
-          <Image src="/images/logo.svg" width={40} height={40} alt="logo" />
-          <span className="font-semibold">FitFuel</span>
-        </div>
-        <div className="hidden md:flex gap-6">
-          <a href="#" className="text-sm hover:text-green-500">Home</a>
-          <a href="#" className="text-sm hover:text-green-500">Food Calculator</a>
-          <a href="#" className="text-sm hover:text-green-500">My Diet</a>
-        </div>
-        <button className="md:hidden" onClick={() => setIsNavOpen(true)}>
-          <Menu size={24} />
-        </button>
-      </nav>
-
-      <MobileNav isOpen={isNavOpen} setIsOpen={setIsNavOpen} />
+      <Navbar />
 
       {/* Hero Section */}
       <section className="bg-green-400 text-center py-12">
@@ -57,26 +80,52 @@ export default function Register() {
         {/* Right Side - Register Form */}
         <div className="p-8 flex flex-col justify-center max-w-md mx-auto w-full">
           <h2 className="text-2xl font-bold mb-6">Register</h2>
-          <form className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium mb-2">Username</label>
-              <Input type="text" placeholder="Enter your username" />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium mb-2">Password</label>
-              <Input type="password" placeholder="Enter your password" />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2">Confirm Password</label>
-              <Input type="password" placeholder="Confirm your password" />
-            </div>
-
-            <Button className="w-full bg-black hover:bg-black/90">
-              Sign Up
-            </Button>
-          </form>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your username" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="Enter your password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="Confirm your password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="w-full bg-black hover:bg-black/90">
+                Sign Up
+              </Button>
+            </form>
+          </Form>
         </div>
       </div>
 

@@ -5,8 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Menu } from 'lucide-react'
-import { MobileNav } from '@/components/ui/mobileNav'
+import Navbar from '@/components/ui/navbar'
 
 export default function Login() {
   const [isNavOpen, setIsNavOpen] = useState(false)
@@ -14,22 +13,7 @@ export default function Login() {
   return (
     <div className="min-h-screen flex flex-col md:w-full w-screen overflow-x-hidden">
       {/* Navigation */}
-      <nav className="flex items-center justify-between p-4 border-b">
-        <div className="flex items-center gap-2">
-          <Image src="/images/logo.svg" width={40} height={40} alt="logo" />
-          <span className="font-semibold">FitFuel</span>
-        </div>
-        <div className="hidden md:flex gap-6">
-          <a href="#" className="text-sm hover:text-green-500">Home</a>
-          <a href="#" className="text-sm hover:text-green-500">Food Calculator</a>
-          <a href="#" className="text-sm hover:text-green-500">My Diet</a>
-        </div>
-        <button className="md:hidden" onClick={() => setIsNavOpen(true)}>
-          <Menu size={24} />
-        </button>
-      </nav>
-
-      <MobileNav isOpen={isNavOpen} setIsOpen={setIsNavOpen} />
+      <Navbar />
 
       {/* Main Content */}
         <div className="relative min-h-screen flex flex-col lg:flex-row items-center justify-between p-8 gap-8 bg-login">
