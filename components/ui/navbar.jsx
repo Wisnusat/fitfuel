@@ -21,8 +21,9 @@ function Navbar() {
 
     const menuItems = [
         { name: 'Home', path: '/' },
-        { name: 'Calories Calculator', path: '#' },
+        { name: 'Calories Calculator', path: '/calories-calculator' },
         { name: 'Dashboard', path: '/dashboard' },
+        { name: 'Profile', path: '/profile' },
         { name: 'Login', path: '/login' },
         { name: 'Register', path: '/register' },
     ]
